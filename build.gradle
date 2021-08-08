@@ -1,20 +1,23 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 version = '1.0-SNAPSHOT'
 
 compileJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 11
+    targetCompatibility = 11
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.assertj:assertj-core:3.12.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testImplementation 'org.assertj:assertj-core:3.20.2'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
 
 test {
+    useJUnitPlatform()
     testLogging {
         exceptionFormat = 'full'
         showStandardStreams = true
@@ -22,6 +25,5 @@ test {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
 }

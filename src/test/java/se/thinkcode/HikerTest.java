@@ -1,12 +1,13 @@
 package se.thinkcode;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HikerTest {
     @Test
-    public void should_verify_unit_test_env() {
+    void should_verify_unit_test_env() {
         String expected = "Hello!";
         Hiker hiker = new Hiker();
 
