@@ -8,4 +8,4 @@ Clone with
 
 Build using
     
-    ./gradlew test
+    ./mvnw test
