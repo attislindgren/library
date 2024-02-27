@@ -11,9 +11,10 @@ public class LibraryTest {
     @Test
     void should_return_list_of_titles() {
         Library library = new Library();
+        Book expected = new Book("Extreme");
 
         List<Book> actual = library.searchBooks("Extreme");
 
-        assertThat(actual).isNotEmpty();
+        assertThat(actual).containsExactly(expected);
     }
 }
