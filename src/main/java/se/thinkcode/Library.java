@@ -6,9 +6,15 @@ import java.util.List;
 public class Library {
     public List<Book> searchBooks(String title) {
         List<Book> books = new ArrayList<>();
+        List<Book> booksWithTitle = new ArrayList<>();
         Book book = new Book();
         books.add(book);
-
-        return books;
+        for (int i = 0; i < books.size(); i++) {
+            Book currentBook = books.get(i);
+            if (currentBook.title().contains(title)) {
+                booksWithTitle.add(currentBook);
+            }
+        }
+        return booksWithTitle;
     }
 }
