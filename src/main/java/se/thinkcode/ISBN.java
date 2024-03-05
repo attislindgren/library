@@ -7,10 +7,7 @@ public class ISBN {
 
     public ISBN(String isbn) {
         boolean answer = valid(isbn);
-        if (answer) {
-            System.out.println("Det gick bra!");
-        } else {
-            System.out.println("Det gick dåligt!");
+        if (!answer) {
             throw new RuntimeException("Det gick dåligt!");
         }
         this.isbn = isbn;
@@ -42,5 +39,12 @@ public class ISBN {
         if (o == null || getClass() != o.getClass()) return false;
         ISBN isbn1 = (ISBN) o;
         return Objects.equals(isbn, isbn1.isbn);
+    }
+
+    @Override
+    public String toString() {
+        return "ISBN{" +
+                "isbn='" + isbn + '\'' +
+                '}';
     }
 }

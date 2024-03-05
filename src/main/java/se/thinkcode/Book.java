@@ -4,12 +4,18 @@ import java.util.Objects;
 
 public class Book {
     private final String title;
+    private final ISBN isbn;
 
-    public Book(String title) {
+    public Book(String title, ISBN isbn) {
         this.title = title;
+        this.isbn = isbn;
     }
     public String title() {
         return title;
+    }
+
+    public ISBN isbn() {
+        return isbn;
     }
 
     @Override
@@ -17,11 +23,11 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(title, book.title);
+        return Objects.equals(title, book.title) && Objects.equals(isbn, book.isbn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title);
+        return Objects.hash(title, isbn);
     }
 }
