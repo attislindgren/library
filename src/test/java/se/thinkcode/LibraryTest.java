@@ -43,9 +43,9 @@ public class LibraryTest {
         Book expected = new Book(title, isbn, author);
 
 
-        List<Book> actual = library.searchBooks(isbn);
+        Book actual = library.searchBooks(isbn);
 
-        assertThat(actual).containsExactly(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
