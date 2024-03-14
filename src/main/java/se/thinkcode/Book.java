@@ -3,18 +3,18 @@ package se.thinkcode;
 import java.util.Objects;
 
 public class Book {
-    private final String title;
+    private final Title title;
     private final ISBN isbn;
     private final Author author;
 
 
-    public Book(String title, ISBN isbn, Author author) {
+    public Book(Title title, ISBN isbn, Author author) {
         this.title = title;
         this.isbn = isbn;
         this.author = author;
     }
 
-    public String title() {
+    public Title title() {
         return title;
     }
 

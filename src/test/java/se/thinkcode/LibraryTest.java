@@ -13,9 +13,10 @@ public class LibraryTest {
         Library library = new Library();
         ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
-        Book expected = new Book("Extreme", isbn, author);
+        Title title = new Title("Extreme");
+        Book expected = new Book(title, isbn, author);
 
-        List<Book> actual = library.searchBooks("Extreme");
+        List<Book> actual = library.searchBooks(title);
 
         assertThat(actual).containsExactly(expected);
     }
@@ -25,9 +26,10 @@ public class LibraryTest {
         Library library = new Library();
         ISBN isbn = new ISBN("9780470059029");
         Author author = new Author("George", "Orwell");
-        Book expected = new Book("1984", isbn, author);
+        Title title = new Title("1984");
+        Book expected = new Book(title, isbn, author);
 
-        List<Book> actual = library.searchBooks("1984");
+        List<Book> actual = library.searchBooks(title);
 
         assertThat(actual).containsExactly(expected);
     }
@@ -37,7 +39,8 @@ public class LibraryTest {
         Library library = new Library();
         ISBN isbn = new ISBN("9780470059029");
         Author author = new Author("George", "Orwell");
-        Book expected = new Book("1984", isbn, author);
+        Title title = new Title("1984");
+        Book expected = new Book(title, isbn, author);
 
 
         List<Book> actual = library.searchBooks(isbn);
@@ -50,7 +53,8 @@ public class LibraryTest {
         Library library = new Library();
         ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
-        Book expected = new Book("Extreme", isbn, author);
+        Title title = new Title("Extreme");
+        Book expected = new Book(title, isbn, author);
 
         List<Book> actual = library.searchByAuthor("Beck");
 
@@ -62,7 +66,8 @@ public class LibraryTest {
         Library library = new Library();
         ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
-        Book expected = new Book("Extreme", isbn, author);
+        Title title = new Title("Extreme");
+        Book expected = new Book(title, isbn, author);
 
         List<Book> actual = library.searchByFirstName("Kent");
 
