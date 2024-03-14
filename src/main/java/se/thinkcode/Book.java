@@ -5,17 +5,25 @@ import java.util.Objects;
 public class Book {
     private final String title;
     private final ISBN isbn;
+    private final Author author;
 
-    public Book(String title, ISBN isbn) {
+
+    public Book(String title, ISBN isbn, Author author) {
         this.title = title;
         this.isbn = isbn;
+        this.author = author;
     }
+
     public String title() {
         return title;
     }
 
     public ISBN isbn() {
         return isbn;
+    }
+
+    public Author author() {
+        return author;
     }
 
     @Override
