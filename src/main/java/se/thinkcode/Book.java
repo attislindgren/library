@@ -38,4 +38,13 @@ public class Book {
     public int hashCode() {
         return Objects.hash(title, isbn);
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title=" + title +
+                ", isbn=" + isbn +
+                ", author=" + author +
+                '}';
+    }
 }

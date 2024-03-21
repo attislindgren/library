@@ -42,6 +42,11 @@ public class ISBN {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(isbn);
+    }
+
+    @Override
     public String toString() {
         return "ISBN{" +
                 "isbn='" + isbn + '\'' +
