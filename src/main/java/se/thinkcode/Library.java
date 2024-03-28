@@ -3,10 +3,11 @@ package se.thinkcode;
 import java.util.List;
 
 public class Library {
-    private final Repository repository = new Repository();
+    private final Repository repository;
 
-    public Library() {
+    public Library(Repository repository) {
 
+        this.repository = repository;
     }
 
     public List<Book> searchBooks(Title title) {

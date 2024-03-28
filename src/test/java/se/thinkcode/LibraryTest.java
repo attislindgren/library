@@ -8,9 +8,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class LibraryTest {
+    private final Repository repository = new Repository();
+    private final Library library = new Library(repository);
     @Test
     void should_find_a_book_called_extreme() {
-        Library library = new Library();
         ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
@@ -23,7 +24,6 @@ public class LibraryTest {
 
     @Test
     void should_find_a_book_called_1984() {
-        Library library = new Library();
         ISBN isbn = new ISBN("9780470059029");
         Author author = new Author("George", "Orwell");
         Title title = new Title("1984");
@@ -36,7 +36,6 @@ public class LibraryTest {
 
     @Test
     void should_find_book_by_isbn() {
-        Library library = new Library();
         ISBN isbn = new ISBN("9780470059029");
         Author author = new Author("George", "Orwell");
         Title title = new Title("1984");
@@ -50,7 +49,6 @@ public class LibraryTest {
 
     @Test
     void should_find_book_by_author() {
-        Library library = new Library();
         ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
@@ -63,7 +61,6 @@ public class LibraryTest {
 
     @Test
     void should_find_book_by_author_first_name() {
-        Library library = new Library();
         ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
