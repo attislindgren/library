@@ -3,9 +3,9 @@ package se.thinkcode;
 import java.util.List;
 
 public class Library {
-    private final Repository repository;
+    private final BookRepository repository;
 
-    public Library(Repository repository) {
+    public Library(BookRepository repository) {
 
         this.repository = repository;
     }

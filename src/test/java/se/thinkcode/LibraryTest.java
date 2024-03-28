@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class LibraryTest {
-    private final Repository repository = new Repository();
+    private final BookRepository repository = new BookRepository();
     private final Library library = new Library(repository);
     @Test
     void should_find_a_book_called_extreme() {

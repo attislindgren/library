@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Repository {
+public class BookRepository {
     private final Map<ISBN, Book> books;
 
-    public Repository() {
+    public BookRepository() {
         books = new HashMap<>();
 
         ISBN isbn = new ISBN("9780596809485");

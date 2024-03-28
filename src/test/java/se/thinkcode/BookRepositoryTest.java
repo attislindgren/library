@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RepositoryTest {
+class BookRepositoryTest {
 
     @Test
     void should_delete_a_book() {
-        Repository repository = new Repository();
+        BookRepository repository = new BookRepository();
         ISBN isbn = new ISBN("9789171195739");
         Author author = new Author("Michael", "Crichton");
         Title title = new Title("Jurassic Park");
