@@ -1,14 +1,11 @@
 package se.thinkcode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Library {
     private final BookRepository bookRepository;
     private final BorrowerRepository borrowerRepository;
-    private final Map<Borrower, List<Book>> checkedOutBooks = new HashMap<>();
+    private final Map<Borrower, List<Loan>> checkedOutLoans = new HashMap<>();
 
 
     public Library(BookRepository bookRepository, BorrowerRepository borrowerRepository) {
@@ -37,14 +34,31 @@ public class Library {
         return borrowerRepository.searchBorrower(name);
     }
 
-    public void borrowBook(Book book, Borrower borrower) {
-        List<Book> bookList = this.checkedOutBooks.getOrDefault(borrower, new ArrayList<>());
-        bookList.add(book);
-        this.checkedOutBooks.put(borrower, bookList);
+    public void borrowBook(Book book, Borrower borrower, Date date) {
+        List<Loan> loanList = this.checkedOutLoans.getOrDefault(borrower, new ArrayList<>());
+        Loan loan = new Loan(book, date);
+        loanList.add(loan);
+        this.checkedOutLoans.put(borrower, loanList);
     }
 
     public List<Book> getBooksBorrowedBy(FirstName name) {
+        List<Book> books = new ArrayList<>();
         Borrower borrower = searchBorrower(name);
-        return this.checkedOutBooks.get(borrower);
+        List<Loan> loanList = this.checkedOutLoans.get(borrower);
+        for (Loan currentLoan : loanList) {
+            Book currentBook = currentLoan.getBook();
+            books.add(currentBook);
+        }
+        return books;
+    }
+
+    public Date getDateOfLoan(Borrower borrower, Book book) {
+        List<Loan> loanList = this.checkedOutLoans.get(borrower);
+        for (Loan currentLoan : loanList) {
+            if (currentLoan.getBook().equals(book)) {
+                return currentLoan.getTime();
+            }
+        }
+        return null;
     }
 }

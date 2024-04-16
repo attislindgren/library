@@ -2,6 +2,7 @@ package se.thinkcode;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,8 +80,9 @@ public class LibraryTest {
         Book book = library.searchBooks(isbn);
         FirstName firstName = new FirstName("Kent");
         Borrower borrower = library.searchBorrower(firstName);
+        Date date = new Date();
 
-        library.borrowBook(book, borrower);
+        library.borrowBook(book, borrower, date);
         List<Book> actual = library.getBooksBorrowedBy(firstName);
 
         assertThat(actual).contains(book);
@@ -94,9 +96,10 @@ public class LibraryTest {
         Book book2 = library.searchBooks(isbn2);
         FirstName firstName = new FirstName("Kent");
         Borrower borrower = library.searchBorrower(firstName);
+        Date date = new Date();
 
-        library.borrowBook(book1, borrower);
-        library.borrowBook(book2, borrower);
+        library.borrowBook(book1, borrower, date);
+        library.borrowBook(book2, borrower, date);
 
         List<Book> actual = library.getBooksBorrowedBy(firstName);
 
@@ -113,14 +116,32 @@ public class LibraryTest {
         FirstName olle = new FirstName("Olle");
         Borrower borrower1 = library.searchBorrower(kent);
         Borrower borrower2 = library.searchBorrower(olle);
+        Date date = new Date();
 
-        library.borrowBook(book1, borrower1);
-        library.borrowBook(book2, borrower2);
+        library.borrowBook(book1, borrower1, date);
+        library.borrowBook(book2, borrower2, date);
 
         List<Book> actual = library.getBooksBorrowedBy(kent);
         assertThat(actual).containsExactly(book1);
 
         actual = library.getBooksBorrowedBy(olle);
         assertThat(actual).containsExactly(book2);
+    }
+
+    @Test
+    void should_return_date_of_loan() {
+        ISBN isbn = new ISBN("9780596809485");
+        Book book = library.searchBooks(isbn);
+        FirstName firstName = new FirstName("Kent");
+        Borrower borrower = library.searchBorrower(firstName);
+        Date date = new Date();
+
+
+        library.borrowBook(book, borrower, date);
+
+
+        Date actual = library.getDateOfLoan(borrower, book);
+
+        assertThat(actual).isEqualTo(date);
     }
 }
