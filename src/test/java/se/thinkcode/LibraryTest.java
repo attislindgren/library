@@ -2,7 +2,7 @@ package se.thinkcode;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,13 +76,12 @@ public class LibraryTest {
 
     @Test
     void should_borrow_a_book() {
-        ISBN isbn = new ISBN("9780596809485");
-        Book book = library.searchBooks(isbn);
+        Book book = getBook();
         FirstName firstName = new FirstName("Kent");
         Borrower borrower = library.searchBorrower(firstName);
-        Date date = new Date();
+        LocalDate today = LocalDate.of(2024, 4, 16);
 
-        library.borrowBook(book, borrower, date);
+        library.borrowBook(book, borrower, today);
         List<Book> actual = library.getBooksBorrowedBy(firstName);
 
         assertThat(actual).contains(book);
@@ -96,10 +95,10 @@ public class LibraryTest {
         Book book2 = library.searchBooks(isbn2);
         FirstName firstName = new FirstName("Kent");
         Borrower borrower = library.searchBorrower(firstName);
-        Date date = new Date();
+        LocalDate today = LocalDate.of(2024, 4, 16);
 
-        library.borrowBook(book1, borrower, date);
-        library.borrowBook(book2, borrower, date);
+        library.borrowBook(book1, borrower, today);
+        library.borrowBook(book2, borrower, today);
 
         List<Book> actual = library.getBooksBorrowedBy(firstName);
 
@@ -116,10 +115,10 @@ public class LibraryTest {
         FirstName olle = new FirstName("Olle");
         Borrower borrower1 = library.searchBorrower(kent);
         Borrower borrower2 = library.searchBorrower(olle);
-        Date date = new Date();
+        LocalDate today = LocalDate.of(2024, 4, 16);
 
-        library.borrowBook(book1, borrower1, date);
-        library.borrowBook(book2, borrower2, date);
+        library.borrowBook(book1, borrower1, today);
+        library.borrowBook(book2, borrower2, today);
 
         List<Book> actual = library.getBooksBorrowedBy(kent);
         assertThat(actual).containsExactly(book1);
@@ -130,18 +129,69 @@ public class LibraryTest {
 
     @Test
     void should_return_date_of_loan() {
-        ISBN isbn = new ISBN("9780596809485");
-        Book book = library.searchBooks(isbn);
+        Book book = getBook();
+        Borrower borrower = getBorrower();
+        LocalDate today = LocalDate.of(2024, 4, 16);
+
+
+        library.borrowBook(book, borrower, today);
+
+
+        LocalDate actual = library.getDateOfLoan(borrower, book);
+
+        assertThat(actual).isEqualTo(today);
+    }
+
+
+    @Test
+    void should_return_a_borrowed_book() {
+        Book book = getBook();
+        Borrower borrower = getBorrower();
+        LocalDate today = LocalDate.of(2024, 4, 16);
+        library.borrowBook(book, borrower, today);
+        LocalDate returnDate = today.plusDays(25);
+
+        library.returnBook(book, borrower, returnDate);
+        LocalDate actual = library.getDateOfReturn(borrower, book);
+
+        assertThat(actual).isEqualTo(returnDate);
+    }
+
+    @Test
+    void should_return_fine_for_overdue_book() {
+        Book book = getBook();
+        Borrower borrower = getBorrower();
+        LocalDate today = LocalDate.of(2024, 4, 16);
+        library.borrowBook(book, borrower, today);
+        LocalDate returnDate = today.plusDays(35);
+        library.returnBook(book, borrower, returnDate);
+
+        int actual = library.getFine(book, borrower);
+
+        assertThat(actual).isEqualTo(50);
+    }
+
+    @Test
+    void book_returned_on_time_should_not_be_fined() {
+        Book book = getBook();
+        Borrower borrower = getBorrower();
+        LocalDate today = LocalDate.of(2024, 4, 16);
+        library.borrowBook(book, borrower, today);
+        LocalDate returnDate = today.plusDays(15);
+        library.returnBook(book, borrower, returnDate);
+
+        int actual = library.getFine(book, borrower);
+
+        assertThat(actual).isEqualTo(0);
+    }
+
+    private Borrower getBorrower() {
         FirstName firstName = new FirstName("Kent");
-        Borrower borrower = library.searchBorrower(firstName);
-        Date date = new Date();
+        return library.searchBorrower(firstName);
+    }
 
-
-        library.borrowBook(book, borrower, date);
-
-
-        Date actual = library.getDateOfLoan(borrower, book);
-
-        assertThat(actual).isEqualTo(date);
+    private Book getBook() {
+        ISBN isbn = new ISBN("9780596809485");
+        return library.searchBooks(isbn);
     }
 }

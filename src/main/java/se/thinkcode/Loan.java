@@ -1,30 +1,39 @@
 package se.thinkcode;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Loan {
     private final Book book;
-    private final Date time;
+    private final LocalDate dateBorrowed;
+    private LocalDate returnDate;
 
-    public Loan(Book book, Date time) {
+    public Loan(Book book, LocalDate dateBorrowed) {
         this.book = book;
-        this.time = time;
+        this.dateBorrowed = dateBorrowed;
     }
 
     public Book getBook() {
         return book;
     }
 
-    public Date getTime() {
-        return time;
+    public LocalDate getDateBorrowed() {
+        return dateBorrowed;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
     }
 
     @Override
     public String toString() {
         return "Loan{" +
                 "book=" + book +
-                ", time=" + time +
+                ", time=" + dateBorrowed +
                 '}';
     }
 
@@ -33,11 +42,13 @@ public class Loan {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Loan loan = (Loan) o;
-        return Objects.equals(book, loan.book) && Objects.equals(time, loan.time);
+        return Objects.equals(book, loan.book) && Objects.equals(dateBorrowed, loan.dateBorrowed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(book, time);
+        return Objects.hash(book, dateBorrowed);
     }
+
+
 }
