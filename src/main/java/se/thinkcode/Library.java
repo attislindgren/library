@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Library {
+    public static final int loanDayLimit = 30;
+    public static final int finePerDay = 10;
     private final BookRepository bookRepository;
     private final BorrowerRepository borrowerRepository;
     private final Map<Borrower, List<Loan>> checkedOutLoans = new HashMap<>();
@@ -93,17 +95,15 @@ public class Library {
     }
 
     private static int calculateFine(int daysLate) {
-        return daysLate * 10;
+        return daysLate * finePerDay;
     }
 
     private static int getDaysLate(Loan loan) {
         int daysLate = 0;
         if (loan != null) {
-            LocalDate dateBorrowed = loan.getDateBorrowed();
-            LocalDate returnDate = loan.getReturnDate();
-            int daysBorrowed = (int) dateBorrowed.until(returnDate, ChronoUnit.DAYS);
-            if (daysBorrowed > 30) {
-                daysLate = daysBorrowed - 30;
+            int daysBorrowed = daysLoaned(loan);
+            if (daysBorrowed > loanDayLimit) {
+                daysLate = daysBorrowed - loanDayLimit;
             }
         }
         return daysLate;
@@ -117,5 +117,23 @@ public class Library {
             }
         }
         return null;
+    }
+
+    private static int daysLoaned(Loan loan) {
+        if (loan != null) {
+            LocalDate dateBorrowed = loan.getDateBorrowed();
+            LocalDate returnDate = loan.getReturnDate();
+            return (int) dateBorrowed.until(returnDate, ChronoUnit.DAYS);
+        }
+        return 0;
+    }
+
+    public double averageLoanTime(Borrower borrower) {
+        List<Loan> loanList = this.checkedOutLoans.get(borrower);
+        int length = 0;
+        for (Loan currentLoan : loanList) {
+            length = length + daysLoaned(currentLoan);
+        }
+        return (double) length / loanList.size();
     }
 }
