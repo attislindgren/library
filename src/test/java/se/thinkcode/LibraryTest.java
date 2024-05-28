@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class LibraryTest {
-    private final BookRepository repository = new BookRepository();
+    private final BookRepository repository = new InMemoryBookRepository();
     private final BorrowerRepository borrowerRepository = new BorrowerRepository();
     private final MailSenderStub mailSender = new MailSenderStub();
     private final Library library = new Library(repository, borrowerRepository, mailSender);

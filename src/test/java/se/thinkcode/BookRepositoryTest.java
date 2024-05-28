@@ -8,7 +8,7 @@ class BookRepositoryTest {
 
     @Test
     void should_delete_a_book() {
-        BookRepository repository = new BookRepository();
+        BookRepository repository = new InMemoryBookRepository();
         ISBN isbn = new ISBN("9789171195739");
         Author author = new Author("Michael", "Crichton");
         Title title = new Title("Jurassic Park");
