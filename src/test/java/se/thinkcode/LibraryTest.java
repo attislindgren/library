@@ -3,6 +3,7 @@ package se.thinkcode;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LibraryTest {
     private final BookRepository repository = new BookRepository();
     private final BorrowerRepository borrowerRepository = new BorrowerRepository();
-    private final Library library = new Library(repository, borrowerRepository);
+    private final MailSenderStub mailSender = new MailSenderStub();
+    private final Library library = new Library(repository, borrowerRepository, mailSender);
 
     @Test
     void should_find_a_book_called_extreme() {
@@ -177,6 +179,34 @@ public class LibraryTest {
 
         double actual = library.averageLoanTime(borrower);
         assertThat(actual).isEqualTo(17.0);
+    }
+
+    @Test
+    void should_not_send_mail_for_empty_list_of_loans() {
+        List<Borrower> actual = mailSender.hasSentMail();
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
+    void should_send_email_for_late_return() {
+        Book book = getBook1();
+        Borrower borrower = getBorrower();
+        LocalDate today = borrowBookToday(book, borrower);
+        returnBook(today, 15, book, borrower);
+
+        book = getBook2();
+        FirstName olle = new FirstName("Olle");
+        borrower = library.searchBorrower(olle);
+        today = borrowBookToday(book, borrower);
+        returnBook(today, 35, book, borrower);
+
+        List<Borrower> expected = new ArrayList();
+        expected.add(borrower);
+
+        library.sendLateMail();
+        List<Borrower> actual = mailSender.hasSentMail();
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     private LocalDate returnBook(LocalDate today, int daysToAdd, Book book, Borrower borrower) {

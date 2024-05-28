@@ -12,13 +12,17 @@ public class Library {
     public static final int finePerDay = 10;
     private final BookRepository bookRepository;
     private final BorrowerRepository borrowerRepository;
+    private final MailSender mailSender;
     private final Map<Borrower, List<Loan>> checkedOutLoans = new HashMap<>();
 
 
-    public Library(BookRepository bookRepository, BorrowerRepository borrowerRepository) {
+    public Library(BookRepository bookRepository,
+                   BorrowerRepository borrowerRepository,
+                   MailSender mailSender) {
 
         this.bookRepository = bookRepository;
         this.borrowerRepository = borrowerRepository;
+        this.mailSender = mailSender;
     }
 
     public List<Book> searchBooks(Title title) {
@@ -135,5 +139,27 @@ public class Library {
             length = length + daysLoaned(currentLoan);
         }
         return (double) length / loanList.size();
+    }
+
+    public void sendLateMail() {
+        Map<Borrower, List<Loan>> loans = this.checkedOutLoans;
+        List<Borrower> borrowers = new ArrayList<>(loans.keySet());
+        List<Loan> loanList;
+        Map<Borrower, List<Loan>> lateLoans = new HashMap<>();
+        List<Loan> lateLoan = new ArrayList<>();
+        List<Borrower> lateBorrowers = new ArrayList<>();
+        for (Borrower currentBorrower : borrowers) {
+            loanList = this.checkedOutLoans.get(currentBorrower);
+            for (Loan loan : loanList) {
+                if (getDaysLate(loan) != 0) {
+                    lateLoan.add(loan);
+                    lateBorrowers.add(currentBorrower);
+                }
+                lateLoans.put(currentBorrower, lateLoan);
+            }
+        }
+
+        mailSender.sendEmail(lateBorrowers);
+
     }
 }
