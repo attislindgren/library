@@ -4,11 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BorrowerRepositoryTest {
-
+public abstract class BorrowerRepositoryTest {
+    BorrowerRepository repository;
     @Test
     void should_create_a_borrower() {
-        BorrowerRepository repository = new BorrowerRepository();
         FirstName firstName = new FirstName("Astrid");
         Borrower borrower = new Borrower(firstName);
         repository.createBorrower(borrower);

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LibraryTest {
     private final BookRepository repository = new InMemoryBookRepository();
-    private final BorrowerRepository borrowerRepository = new BorrowerRepository();
+    private final BorrowerRepository borrowerRepository = new InMemoryBorrowerRepository();
     private final MailSenderStub mailSender = new MailSenderStub();
     private final Library library = new Library(repository, borrowerRepository, mailSender);
 
@@ -200,7 +200,7 @@ public class LibraryTest {
         today = borrowBookToday(book, borrower);
         returnBook(today, 35, book, borrower);
 
-        List<Borrower> expected = new ArrayList();
+        List<Borrower> expected = new ArrayList<>();
         expected.add(borrower);
 
         library.sendLateMail();
