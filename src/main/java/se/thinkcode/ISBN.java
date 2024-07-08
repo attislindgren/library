@@ -13,6 +13,10 @@ public class ISBN {
         this.isbn = isbn;
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
     private boolean valid(String isbn) {
         String isbn_without_space = isbn.replaceAll(" ", "");
         String isbn_without_hyphen = isbn_without_space.replaceAll("-", "");

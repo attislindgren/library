@@ -7,6 +7,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.thinkcode.BookDao;
 import se.thinkcode.BorrowerDao;
 import se.thinkcode.version.VersionDao;
 
@@ -95,5 +96,12 @@ public class DatabaseConnection {
         jdbi.installPlugin(new SqlObjectPlugin());
 
         return jdbi.onDemand(BorrowerDao.class);
+    }
+
+    public BookDao getBookDao() {
+        Jdbi jdbi = getJdbi();
+        jdbi.installPlugin(new SqlObjectPlugin());
+
+        return jdbi.onDemand(BookDao.class);
     }
 }
