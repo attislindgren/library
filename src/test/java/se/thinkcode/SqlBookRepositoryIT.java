@@ -7,5 +7,6 @@ public class SqlBookRepositoryIT extends BookRepositoryTest {
         DatabaseConnection databaseConnection = new DatabaseConnection();
 
         repository = new SqlBookRepository(databaseConnection);
+        repository.delete();
     }
 }

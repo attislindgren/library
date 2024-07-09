@@ -23,7 +23,9 @@ public class SqlBookRepository implements BookRepository {
 
     @Override
     public List<Book> searchBooks(Title title) {
-        return null;
+        BookDao dao = databaseConnection.getBookDao();
+        String titleStr = title.getTitle();
+        return dao.searchBookByTitle(titleStr);
     }
 
     @Override
@@ -35,12 +37,14 @@ public class SqlBookRepository implements BookRepository {
 
     @Override
     public List<Book> searchByAuthor(String surname) {
-        return null;
+        BookDao dao = databaseConnection.getBookDao();
+        return dao.searchBookByAuthor(surname);
     }
 
     @Override
     public List<Book> searchByFirstName(String firstName) {
-        return null;
+        BookDao dao = databaseConnection.getBookDao();
+        return dao.searchBookByFirstName(firstName);
     }
 
     @Override
@@ -48,5 +52,11 @@ public class SqlBookRepository implements BookRepository {
         BookDao dao = databaseConnection.getBookDao();
         String isbnstr = isbn.getIsbn();
         dao.deleteBook(isbnstr);
+    }
+
+    @Override
+    public void delete() {
+        BookDao dao = databaseConnection.getBookDao();
+        dao.deleteBook();
     }
 }

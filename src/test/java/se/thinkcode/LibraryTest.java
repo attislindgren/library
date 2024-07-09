@@ -21,6 +21,7 @@ public class LibraryTest {
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = library.searchBooks(title);
 
@@ -33,6 +34,7 @@ public class LibraryTest {
         Author author = new Author("George", "Orwell");
         Title title = new Title("1984");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = library.searchBooks(title);
 
@@ -45,7 +47,7 @@ public class LibraryTest {
         Author author = new Author("George", "Orwell");
         Title title = new Title("1984");
         Book expected = new Book(title, isbn, author);
-
+        repository.create(expected);
 
         Book actual = library.searchBooks(isbn);
 
@@ -58,6 +60,7 @@ public class LibraryTest {
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = library.searchByAuthor("Beck");
 
@@ -70,6 +73,7 @@ public class LibraryTest {
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = library.searchByFirstName("Kent");
 
@@ -228,11 +232,19 @@ public class LibraryTest {
 
     private Book getBook1() {
         ISBN isbn = new ISBN("9780596809485");
-        return library.searchBooks(isbn);
+        Author author = new Author("Kent", "Beck");
+        Title title = new Title("Extreme");
+        Book book = new Book(title, isbn, author);
+        repository.create(book);
+        return book;
     }
 
     private Book getBook2() {
         ISBN isbn = new ISBN("9780470059029");
-        return library.searchBooks(isbn);
+        Author author = new Author("George", "Orwell");
+        Title title = new Title("1984");
+        Book book = new Book(title, isbn, author);
+        repository.create(book);
+        return book;
     }
 }

@@ -32,6 +32,7 @@ public abstract class BookRepositoryTest {
         Author author = new Author("George", "Orwell");
         Title title = new Title("1984");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = repository.searchBooks(title);
 
@@ -44,6 +45,7 @@ public abstract class BookRepositoryTest {
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = repository.searchByFirstName("Kent");
 
@@ -56,7 +58,7 @@ public abstract class BookRepositoryTest {
         Author author = new Author("George", "Orwell");
         Title title = new Title("1984");
         Book expected = new Book(title, isbn, author);
-
+        repository.create(expected);
 
         Book actual = repository.searchBooks(isbn);
 
@@ -69,6 +71,7 @@ public abstract class BookRepositoryTest {
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
         Book expected = new Book(title, isbn, author);
+        repository.create(expected);
 
         List<Book> actual = repository.searchByAuthor("Beck");
 

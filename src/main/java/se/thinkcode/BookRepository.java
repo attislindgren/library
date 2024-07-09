@@ -14,4 +14,6 @@ public interface BookRepository {
     List<Book> searchByFirstName(String firstName);
 
     void delete(ISBN isbn);
+
+    void delete();
 }

@@ -11,17 +11,17 @@ public class InMemoryBookRepository implements BookRepository {
     public InMemoryBookRepository() {
         books = new HashMap<>();
 
-        ISBN isbn = new ISBN("9780596809485");
+        /*ISBN isbn = new ISBN("9780596809485");
         Author author = new Author("Kent", "Beck");
         Title title = new Title("Extreme");
         Book book = new Book(title, isbn, author);
-        create(book);
+        create(book);*/
 
-        author = new Author("George", "Orwell");
+        /*author = new Author("George", "Orwell");
         isbn = new ISBN("9780470059029");
         title = new Title("1984");
         book = new Book(title, isbn, author);
-        create(book);
+        create(book); */
     }
 
     @Override
@@ -71,5 +71,10 @@ public class InMemoryBookRepository implements BookRepository {
     @Override
     public void delete(ISBN isbn) {
         books.remove(isbn);
+    }
+
+    @Override
+    public void delete() {
+
     }
 }
