@@ -13,7 +13,8 @@ public class LibraryTest {
     private final BookRepository repository = new InMemoryBookRepository();
     private final BorrowerRepository borrowerRepository = new InMemoryBorrowerRepository();
     private final MailSenderStub mailSender = new MailSenderStub();
-    private final Library library = new Library(repository, borrowerRepository, mailSender);
+    private final LoanRepository loanRepository = new InMemoryLoanRepository();
+    private final Library library = new Library(repository, borrowerRepository, mailSender, loanRepository);
 
     @Test
     void should_find_a_book_called_extreme() {

@@ -3,9 +3,7 @@ package se.thinkcode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Library {
     public static final int loanDayLimit = 30;
@@ -13,16 +11,18 @@ public class Library {
     private final BookRepository bookRepository;
     private final BorrowerRepository borrowerRepository;
     private final MailSender mailSender;
-    private final Map<Borrower, List<Loan>> checkedOutLoans = new HashMap<>();
+    private final LoanRepository loanRepository;
 
 
     public Library(BookRepository bookRepository,
                    BorrowerRepository borrowerRepository,
-                   MailSender mailSender) {
+                   MailSender mailSender,
+                   LoanRepository loanRepository) {
 
         this.bookRepository = bookRepository;
         this.borrowerRepository = borrowerRepository;
         this.mailSender = mailSender;
+        this.loanRepository = loanRepository;
     }
 
     public List<Book> searchBooks(Title title) {
@@ -46,50 +46,24 @@ public class Library {
     }
 
     public void borrowBook(Book book, Borrower borrower, LocalDate date) {
-        List<Loan> loanList = this.checkedOutLoans.getOrDefault(borrower, new ArrayList<>());
-        Loan loan = new Loan(book, date);
-        loanList.add(loan);
-        this.checkedOutLoans.put(borrower, loanList);
+        loanRepository.borrowBook(book, borrower, date);
     }
 
     public List<Book> getBooksBorrowedBy(FirstName name) {
-        List<Book> books = new ArrayList<>();
         Borrower borrower = searchBorrower(name);
-        List<Loan> loanList = this.checkedOutLoans.get(borrower);
-        for (Loan currentLoan : loanList) {
-            Book currentBook = currentLoan.getBook();
-            books.add(currentBook);
-        }
-        return books;
+        return loanRepository.getBooksBorrowedBy(borrower);
     }
 
     public LocalDate getDateOfLoan(Borrower borrower, Book book) {
-        List<Loan> loanList = this.checkedOutLoans.get(borrower);
-        for (Loan currentLoan : loanList) {
-            if (currentLoan.getBook().equals(book)) {
-                return currentLoan.getDateBorrowed();
-            }
-        }
-        return null;
+        return loanRepository.getDateOfLoan(borrower, book);
     }
 
     public void returnBook(Book book, Borrower borrower, LocalDate returnDate) {
-        List<Loan> loanList = this.checkedOutLoans.get(borrower);
-        for (Loan currentLoan : loanList) {
-            if (currentLoan.getBook().equals(book)) {
-                currentLoan.setReturnDate(returnDate);
-            }
-        }
+        loanRepository.returnBook(book, borrower, returnDate);
     }
 
     public LocalDate getDateOfReturn(Borrower borrower, Book book) {
-        List<Loan> loanList = this.checkedOutLoans.get(borrower);
-        for (Loan currentLoan : loanList) {
-            if (currentLoan.getBook().equals(book)) {
-                return currentLoan.getReturnDate();
-            }
-        }
-        return null;
+        return loanRepository.getDateOfReturn(borrower, book);
     }
 
     public int getFine(Book book, Borrower borrower) {
@@ -114,13 +88,8 @@ public class Library {
     }
 
     private Loan getLoan(Book book, Borrower borrower) {
-        List<Loan> loanList = this.checkedOutLoans.get(borrower);
-        for (Loan currentLoan : loanList) {
-            if (currentLoan.getBook().equals(book)) {
-                return currentLoan;
-            }
-        }
-        return null;
+        return loanRepository.getLoan(book, borrower);
+
     }
 
     private static int daysLoaned(Loan loan) {
@@ -133,7 +102,7 @@ public class Library {
     }
 
     public double averageLoanTime(Borrower borrower) {
-        List<Loan> loanList = this.checkedOutLoans.get(borrower);
+        List<Loan> loanList = loanRepository.getLoans(borrower);
         int length = 0;
         for (Loan currentLoan : loanList) {
             length = length + daysLoaned(currentLoan);
@@ -142,20 +111,15 @@ public class Library {
     }
 
     public void sendLateMail() {
-        Map<Borrower, List<Loan>> loans = this.checkedOutLoans;
-        List<Borrower> borrowers = new ArrayList<>(loans.keySet());
+        List<Borrower> borrowers = loanRepository.getBorrowers();
         List<Loan> loanList;
-        Map<Borrower, List<Loan>> lateLoans = new HashMap<>();
-        List<Loan> lateLoan = new ArrayList<>();
         List<Borrower> lateBorrowers = new ArrayList<>();
         for (Borrower currentBorrower : borrowers) {
-            loanList = this.checkedOutLoans.get(currentBorrower);
+            loanList = loanRepository.getLoans(currentBorrower);
             for (Loan loan : loanList) {
                 if (getDaysLate(loan) != 0) {
-                    lateLoan.add(loan);
                     lateBorrowers.add(currentBorrower);
                 }
-                lateLoans.put(currentBorrower, lateLoan);
             }
         }
 

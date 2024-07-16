@@ -11,17 +11,6 @@ public class InMemoryBookRepository implements BookRepository {
     public InMemoryBookRepository() {
         books = new HashMap<>();
 
-        /*ISBN isbn = new ISBN("9780596809485");
-        Author author = new Author("Kent", "Beck");
-        Title title = new Title("Extreme");
-        Book book = new Book(title, isbn, author);
-        create(book);*/
-
-        /*author = new Author("George", "Orwell");
-        isbn = new ISBN("9780470059029");
-        title = new Title("1984");
-        book = new Book(title, isbn, author);
-        create(book); */
     }
 
     @Override
