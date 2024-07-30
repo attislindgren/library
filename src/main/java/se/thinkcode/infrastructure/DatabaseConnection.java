@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.thinkcode.BookDao;
 import se.thinkcode.BorrowerDao;
+import se.thinkcode.LoanDao;
 import se.thinkcode.version.VersionDao;
 
 public class DatabaseConnection {
@@ -103,5 +104,12 @@ public class DatabaseConnection {
         jdbi.installPlugin(new SqlObjectPlugin());
 
         return jdbi.onDemand(BookDao.class);
+    }
+
+    public LoanDao getLoanDao() {
+        Jdbi jdbi = getJdbi();
+        jdbi.installPlugin(new SqlObjectPlugin());
+
+        return jdbi.onDemand(LoanDao.class);
     }
 }

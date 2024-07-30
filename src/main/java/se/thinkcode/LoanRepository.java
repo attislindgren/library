@@ -19,4 +19,6 @@ public interface LoanRepository {
     List<Loan> getLoans(Borrower borrower);
 
     List<Borrower> getBorrowers();
+
+    void delete();
 }

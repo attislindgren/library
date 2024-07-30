@@ -7,10 +7,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoanRepositoryTest {
-    LoanRepository loanRepository = new InMemoryLoanRepository();
-    BookRepository bookRepository = new InMemoryBookRepository();
-    BorrowerRepository borrowerRepository = new InMemoryBorrowerRepository();
+public abstract class LoanRepositoryTest {
+    LoanRepository loanRepository;
+    BookRepository bookRepository;
 
     @Test
     void should_return_a_borrowed_book() {
@@ -62,6 +61,6 @@ public class LoanRepositoryTest {
 
     private Borrower getBorrower() {
         FirstName firstName = new FirstName("Kent");
-        return borrowerRepository.searchBorrower(firstName);
+        return new Borrower(firstName);
     }
 }

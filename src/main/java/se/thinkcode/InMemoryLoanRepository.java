@@ -80,4 +80,9 @@ public class InMemoryLoanRepository implements LoanRepository {
     public List<Borrower> getBorrowers() {
         return new ArrayList<>(this.checkedOutLoans.keySet());
     }
+
+    @Override
+    public void delete() {
+
+    }
 }
