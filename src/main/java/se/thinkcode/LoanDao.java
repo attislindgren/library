@@ -59,4 +59,31 @@ public interface LoanDao {
             """)
     LocalDate getDateOfLoan(@Bind("isbn") String isbn,
                             @Bind("firstName") String firstName);
+
+    @SqlQuery("""
+            select title, book.isbn, book.firstName, surname, loanDate
+            from book
+            join loan on loan.isbn=book.isbn
+            where loan.firstName = :firstName and
+            loan.isbn = :isbn
+            """)
+    @RegisterRowMapper(LoanMapper.class)
+    Loan getLoan(@Bind("isbn") String isbn,
+                 @Bind("firstName") String firstName);
+
+    @SqlQuery("""
+            select title, book.isbn, book.firstName, surname, loanDate
+            from book
+            join loan on loan.isbn=book.isbn
+            where loan.firstName = :firstName
+            """)
+    @RegisterRowMapper(LoanMapper.class)
+    List<Loan> getLoans(@Bind("firstName") String firstName);
+
+    @SqlQuery("""
+            select firstName
+            from loan
+            """)
+    @RegisterRowMapper(BorrowerMapper.class)
+    List<Borrower> getBorrowers();
 }

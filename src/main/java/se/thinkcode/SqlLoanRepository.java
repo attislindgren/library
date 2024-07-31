@@ -53,17 +53,23 @@ public class SqlLoanRepository implements LoanRepository {
 
     @Override
     public Loan getLoan(Book book, Borrower borrower) {
-        return null;
+        LoanDao dao = databaseConnection.getLoanDao();
+        String isbn = book.isbn().getIsbn();
+        String firstName = borrower.getName().getFirstName();
+        return dao.getLoan(isbn, firstName);
     }
 
     @Override
     public List<Loan> getLoans(Borrower borrower) {
-        return null;
+        LoanDao dao = databaseConnection.getLoanDao();
+        String firstName = borrower.getName().getFirstName();
+        return dao.getLoans(firstName);
     }
 
     @Override
     public List<Borrower> getBorrowers() {
-        return null;
+        LoanDao dao = databaseConnection.getLoanDao();
+        return dao.getBorrowers();
     }
 
     @Override
