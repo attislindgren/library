@@ -7,9 +7,9 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.thinkcode.BookDao;
-import se.thinkcode.BorrowerDao;
-import se.thinkcode.LoanDao;
+import se.thinkcode.library.BookDao;
+import se.thinkcode.library.BorrowerDao;
+import se.thinkcode.library.LoanDao;
 import se.thinkcode.version.VersionDao;
 
 public class DatabaseConnection {
