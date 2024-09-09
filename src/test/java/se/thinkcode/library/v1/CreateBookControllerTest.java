@@ -20,8 +20,10 @@ class CreateBookControllerTest {
 
     @BeforeEach
     void setup() {
-        app.post("/v1/createBook", createBookController);
-        app.get("/v1/getBook/{isbn}", getBookController);
+        Routes routes = new Routes();
+        routes.overrideController("GetBook", getBookController);
+        routes.overrideController("CreateBook", createBookController);
+        routes.routes(app);
     }
     @Test
     void should_create_book() {
