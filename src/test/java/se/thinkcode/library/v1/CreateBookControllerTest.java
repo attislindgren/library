@@ -63,20 +63,35 @@ class CreateBookControllerTest {
         GetBookResponse expected = new GetBookResponse("Jurassic Park", "9789171195739", "Michael", "Crichton");
 
         JavalinTest.test(app, (server, client) -> {
-            Response createResponse = client.post("/v1/createBook", json);
-
-            Book actual = service.searchBooks(new ISBN("9789171195739"));
-
-            assertThat(actual.title()).isEqualTo(new Title("Jurassic Park"));
-            assertThat(createResponse.code()).isEqualTo(201);
+            try (Response createResponse = client.post("/v1/createBook", json)) {
+                assertThat(createResponse.code()).isEqualTo(201);
+            }
 
             Response getResponse = client.get("/v1/getBook/9789171195739");
 
             assertThat(getResponse.code()).isEqualTo(200);
             assertThat(getResponse.body()).isNotNull();
 
-            GetBookResponse actual1 = javalinJackson.fromJsonStream(getResponse.body().byteStream(), GetBookResponse.class);
-            assertThat(actual1).isEqualTo(expected);
+            GetBookResponse actual = javalinJackson.fromJsonStream(getResponse.body().byteStream(), GetBookResponse.class);
+            assertThat(actual).isEqualTo(expected);
+        });
+    }
+
+    @Test
+    void should_return_not_found_for_unknown_book() {
+        JavalinTest.test(app, (server, client) -> {
+            Response response = client.get("/v1/getBook/9780470059029");
+
+            assertThat(response.code()).isEqualTo(404);
+        });
+    }
+
+    @Test
+    void should_return_not_found_for_missing_isbn() {
+        JavalinTest.test(app, (server, client) -> {
+            Response response = client.get("/v1/getBook");
+
+            assertThat(response.code()).isEqualTo(404);
         });
     }
 }
