@@ -9,18 +9,18 @@ public class LibraryService {
     public static final int loanDayLimit = 30;
     public static final int finePerDay = 10;
     private final BookRepository bookRepository;
-    private final BorrowerRepository borrowerRepository;
+    private final BorrowerService borrowerService;
     private final MailSender mailSender;
     private final LoanRepository loanRepository;
 
 
     public LibraryService(BookRepository bookRepository,
-                          BorrowerRepository borrowerRepository,
+                          BorrowerService borrowerService,
                           MailSender mailSender,
                           LoanRepository loanRepository) {
 
         this.bookRepository = bookRepository;
-        this.borrowerRepository = borrowerRepository;
+        this.borrowerService = borrowerService;
         this.mailSender = mailSender;
         this.loanRepository = loanRepository;
     }
@@ -42,7 +42,7 @@ public class LibraryService {
     }
 
     public Borrower searchBorrower(FirstName name) {
-        return borrowerRepository.searchBorrower(name);
+        return borrowerService.searchBorrower(name);
     }
 
     public void borrowBook(Book book, Borrower borrower, LocalDate date) {
