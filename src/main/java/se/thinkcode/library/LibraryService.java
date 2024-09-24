@@ -8,37 +8,37 @@ import java.util.List;
 public class LibraryService {
     public static final int loanDayLimit = 30;
     public static final int finePerDay = 10;
-    private final BookRepository bookRepository;
+    private final BookService bookService;
     private final BorrowerService borrowerService;
     private final MailSender mailSender;
     private final LoanRepository loanRepository;
 
 
-    public LibraryService(BookRepository bookRepository,
+    public LibraryService(BookService bookService,
                           BorrowerService borrowerService,
                           MailSender mailSender,
                           LoanRepository loanRepository) {
 
-        this.bookRepository = bookRepository;
+        this.bookService = bookService;
         this.borrowerService = borrowerService;
         this.mailSender = mailSender;
         this.loanRepository = loanRepository;
     }
 
     public List<Book> searchBooks(Title title) {
-        return bookRepository.searchBooks(title);
+        return bookService.searchBooks(title);
     }
 
     public Book searchBooks(ISBN isbn) {
-        return bookRepository.searchBooks(isbn);
+        return bookService.searchBooks(isbn);
     }
 
     public List<Book> searchByAuthor(String surname) {
-        return bookRepository.searchByAuthor(surname);
+        return bookService.searchByAuthor(surname);
     }
 
     public List<Book> searchByFirstName(String firstName) {
-        return bookRepository.searchByFirstName(firstName);
+        return bookService.searchByFirstName(firstName);
     }
 
     public Borrower searchBorrower(FirstName name) {
@@ -128,6 +128,6 @@ public class LibraryService {
     }
 
     public void createBook(Book book) {
-        bookRepository.create(book);
+        bookService.createBook(book);
     }
 }

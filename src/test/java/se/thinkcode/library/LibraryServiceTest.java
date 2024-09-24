@@ -15,8 +15,9 @@ public class LibraryServiceTest {
     private final MailSenderStub mailSender = new MailSenderStub();
     private final LoanRepository loanRepository = new InMemoryLoanRepository();
     private final BorrowerService borrowerService = new BorrowerService(borrowerRepository);
+    private final BookService bookService = new BookService(repository);
 
-    private final LibraryService libraryService = new LibraryService(repository, borrowerService, mailSender, loanRepository);
+    private final LibraryService libraryService = new LibraryService(bookService, borrowerService, mailSender, loanRepository);
 
     @Test
     void should_find_a_book_called_extreme() {

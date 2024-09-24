@@ -43,8 +43,9 @@ public class Routes {
             return (CreateBookController) controllers.get("CreateBook");
         }
         BookRepository bookRepository = getBookRepository();
+        BookService bookService = new BookService(bookRepository);
 
-        return new CreateBookController(new LibraryService(bookRepository, null, null, null));
+        return new CreateBookController(new LibraryService(bookService, null, null, null));
     }
 
     private GetBookController getBookController() {
@@ -52,8 +53,9 @@ public class Routes {
             return (GetBookController) controllers.get("GetBook");
         }
         BookRepository bookRepository = getBookRepository();
+        BookService bookService = new BookService(bookRepository);
 
-        return new GetBookController(new LibraryService(bookRepository, null, null, null));
+        return new GetBookController(new LibraryService(bookService, null, null, null));
     }
 
     private BookRepository getBookRepository() {

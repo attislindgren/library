@@ -13,7 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CreateBookControllerTest {
     private final Javalin app = Javalin.create();
     BookRepository repository = new InMemoryBookRepository();
-    LibraryService service = new LibraryService(repository, null, null, null);
+    BookService bookService = new BookService(repository);
+    LibraryService service = new LibraryService(bookService, null, null, null);
     CreateBookController createBookController = new CreateBookController(service);
     GetBookController getBookController = new GetBookController(service);
     JavalinJackson javalinJackson = new JavalinJackson();
