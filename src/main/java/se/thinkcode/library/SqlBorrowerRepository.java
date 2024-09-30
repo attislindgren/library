@@ -13,14 +13,14 @@ public class SqlBorrowerRepository implements BorrowerRepository {
     @Override
     public void createBorrower(Borrower borrower) {
         BorrowerDao dao = databaseConnection.getBorrowerDao();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         dao.createBorrower(firstName);
     }
 
     @Override
     public Borrower searchBorrower(FirstName firstName) {
         BorrowerDao dao = databaseConnection.getBorrowerDao();
-        String name = firstName.getFirstName();
+        String name = firstName.firstName();
         return dao.searchBorrower(name);
     }
 }

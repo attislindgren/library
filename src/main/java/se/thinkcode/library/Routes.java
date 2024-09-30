@@ -6,6 +6,7 @@ import se.thinkcode.infrastructure.DatabaseConnection;
 import se.thinkcode.library.v1.CreateBookController;
 import se.thinkcode.library.v1.CreateBorrowerController;
 import se.thinkcode.library.v1.GetBookController;
+import se.thinkcode.library.v1.GetBorrowerController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class Routes {
         app.post("/v1/createBook", getCreateBookController());
         app.get("/v1/getBook/{isbn}", getBookController());
         app.post("/v1/createBorrower", getCreateBorrowerController());
+        app.get("/v1/getBorrower/{name}", getBorrowerController());
     }
 
 
@@ -45,7 +47,7 @@ public class Routes {
         BookRepository bookRepository = getBookRepository();
         BookService bookService = new BookService(bookRepository);
 
-        return new CreateBookController(new LibraryService(bookService, null, null, null));
+        return new CreateBookController(bookService);
     }
 
     private GetBookController getBookController() {
@@ -55,7 +57,17 @@ public class Routes {
         BookRepository bookRepository = getBookRepository();
         BookService bookService = new BookService(bookRepository);
 
-        return new GetBookController(new LibraryService(bookService, null, null, null));
+        return new GetBookController(bookService);
+    }
+
+    private GetBorrowerController getBorrowerController() {
+        if (controllers.containsKey("GetBorrower")) {
+            return (GetBorrowerController) controllers.get("GetBorrower");
+        }
+        BorrowerRepository borrowerRepository = getBorrowerRepository();
+        BorrowerService borrowerService = new BorrowerService(borrowerRepository);
+
+        return new GetBorrowerController(borrowerService);
     }
 
     private BookRepository getBookRepository() {

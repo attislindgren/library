@@ -16,14 +16,14 @@ public class SqlLoanRepository implements LoanRepository {
     public void borrowBook(Book book, Borrower borrower, LocalDate date) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         dao.borrowBook(isbn, firstName, date);
     }
 
     @Override
     public List<Book> getBooksBorrowedBy(Borrower borrower) {
         LoanDao dao = databaseConnection.getLoanDao();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         return dao.getBooksBorrowedBy(firstName);
     }
 
@@ -31,7 +31,7 @@ public class SqlLoanRepository implements LoanRepository {
     public LocalDate getDateOfLoan(Borrower borrower, Book book) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         return dao.getDateOfLoan(isbn, firstName);
     }
 
@@ -39,7 +39,7 @@ public class SqlLoanRepository implements LoanRepository {
     public void returnBook(Book book, Borrower borrower, LocalDate returnDate) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         dao.returnBook(isbn, firstName, returnDate);
     }
 
@@ -47,7 +47,7 @@ public class SqlLoanRepository implements LoanRepository {
     public LocalDate getDateOfReturn(Borrower borrower, Book book) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         return dao.getDateOfReturn(isbn, firstName);
     }
 
@@ -55,14 +55,14 @@ public class SqlLoanRepository implements LoanRepository {
     public Loan getLoan(Book book, Borrower borrower) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         return dao.getLoan(isbn, firstName);
     }
 
     @Override
     public List<Loan> getLoans(Borrower borrower) {
         LoanDao dao = databaseConnection.getLoanDao();
-        String firstName = borrower.getName().getFirstName();
+        String firstName = borrower.getName().firstName();
         return dao.getLoans(firstName);
     }
 

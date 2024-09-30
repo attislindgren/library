@@ -4,12 +4,12 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
 import se.thinkcode.library.Book;
-import se.thinkcode.library.LibraryService;
+import se.thinkcode.library.BookService;
 
 public class CreateBookController implements Handler {
-    private final LibraryService service;
+    private final BookService service;
 
-    public CreateBookController(LibraryService service) {
+    public CreateBookController(BookService service) {
 
         this.service = service;
     }
