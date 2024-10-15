@@ -11,18 +11,18 @@ public class LibraryService {
     private final BookService bookService;
     private final BorrowerService borrowerService;
     private final MailSender mailSender;
-    private final LoanRepository loanRepository;
+    private final LoanService loanService;
 
 
     public LibraryService(BookService bookService,
                           BorrowerService borrowerService,
                           MailSender mailSender,
-                          LoanRepository loanRepository) {
+                          LoanService loanService) {
 
         this.bookService = bookService;
         this.borrowerService = borrowerService;
         this.mailSender = mailSender;
-        this.loanRepository = loanRepository;
+        this.loanService = loanService;
     }
 
     public List<Book> searchBooks(Title title) {
@@ -46,24 +46,24 @@ public class LibraryService {
     }
 
     public void borrowBook(Book book, Borrower borrower, LocalDate date) {
-        loanRepository.borrowBook(book, borrower, date);
+        loanService.borrowBook(book, borrower, date);
     }
 
     public List<Book> getBooksBorrowedBy(FirstName name) {
         Borrower borrower = searchBorrower(name);
-        return loanRepository.getBooksBorrowedBy(borrower);
+        return loanService.getBooksBorrowedBy(borrower);
     }
 
     public LocalDate getDateOfLoan(Borrower borrower, Book book) {
-        return loanRepository.getDateOfLoan(borrower, book);
+        return loanService.getDateOfLoan(borrower, book);
     }
 
     public void returnBook(Book book, Borrower borrower, LocalDate returnDate) {
-        loanRepository.returnBook(book, borrower, returnDate);
+        loanService.returnBook(book, borrower, returnDate);
     }
 
     public LocalDate getDateOfReturn(Borrower borrower, Book book) {
-        return loanRepository.getDateOfReturn(borrower, book);
+        return loanService.getDateOfReturn(borrower, book);
     }
 
     public int getFine(Book book, Borrower borrower) {
@@ -88,7 +88,7 @@ public class LibraryService {
     }
 
     private Loan getLoan(Book book, Borrower borrower) {
-        return loanRepository.getLoan(book, borrower);
+        return loanService.getLoan(book, borrower);
 
     }
 
@@ -102,7 +102,7 @@ public class LibraryService {
     }
 
     public double averageLoanTime(Borrower borrower) {
-        List<Loan> loanList = loanRepository.getLoans(borrower);
+        List<Loan> loanList = loanService.getLoans(borrower);
         int length = 0;
         for (Loan currentLoan : loanList) {
             length = length + daysLoaned(currentLoan);
@@ -111,11 +111,11 @@ public class LibraryService {
     }
 
     public void sendLateMail() {
-        List<Borrower> borrowers = loanRepository.getBorrowers();
+        List<Borrower> borrowers = loanService.getBorrowers();
         List<Loan> loanList;
         List<Borrower> lateBorrowers = new ArrayList<>();
         for (Borrower currentBorrower : borrowers) {
-            loanList = loanRepository.getLoans(currentBorrower);
+            loanList = loanService.getLoans(currentBorrower);
             for (Loan loan : loanList) {
                 if (getDaysLate(loan) != 0) {
                     lateBorrowers.add(currentBorrower);
@@ -127,7 +127,4 @@ public class LibraryService {
 
     }
 
-    public void createBook(Book book) {
-        bookService.createBook(book);
-    }
 }

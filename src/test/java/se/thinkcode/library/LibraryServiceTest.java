@@ -14,10 +14,11 @@ public class LibraryServiceTest {
     private final BorrowerRepository borrowerRepository = new InMemoryBorrowerRepository();
     private final MailSenderStub mailSender = new MailSenderStub();
     private final LoanRepository loanRepository = new InMemoryLoanRepository();
+    private final LoanService loanService = new LoanService(loanRepository);
     private final BorrowerService borrowerService = new BorrowerService(borrowerRepository);
     private final BookService bookService = new BookService(repository);
 
-    private final LibraryService libraryService = new LibraryService(bookService, borrowerService, mailSender, loanRepository);
+    private final LibraryService libraryService = new LibraryService(bookService, borrowerService, mailSender, loanService);
 
     @Test
     void should_find_a_book_called_extreme() {
@@ -233,15 +234,6 @@ public class LibraryServiceTest {
         FirstName firstName = new FirstName("Kent");
         LastName lastName = new LastName("Sten");
         Email email = new Email("kent@sten.se");
-        Borrower borrower = new Borrower(firstName, lastName, email);
-        borrowerService.createBorrower(email, borrower);
-        return borrower;
-    }
-
-    private Borrower getBorrower2() {
-        FirstName firstName = new FirstName("Olle");
-        LastName lastName = new LastName("Sten");
-        Email email = new Email("olle@sten.se");
         Borrower borrower = new Borrower(firstName, lastName, email);
         borrowerService.createBorrower(email, borrower);
         return borrower;

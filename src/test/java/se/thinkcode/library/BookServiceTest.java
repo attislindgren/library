@@ -23,6 +23,7 @@ public class BookServiceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+
     @Test
     void should_find_book_by_title() {
         ISBN isbn = new ISBN("9781785030253");
