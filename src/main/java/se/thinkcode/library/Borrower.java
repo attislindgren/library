@@ -4,13 +4,25 @@ import java.util.Objects;
 
 public class Borrower {
     private final FirstName firstName;
+    private final LastName lastName;
+    private final Email email;
 
-    public Borrower(FirstName firstName) {
+    public Borrower(FirstName firstName, LastName lastName, Email email) {
         this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public FirstName getName() {
         return firstName;
+    }
+
+    public LastName getLastName() {
+        return lastName;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 
     @Override

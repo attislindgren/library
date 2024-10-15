@@ -11,6 +11,10 @@ public class BorrowerMapper implements RowMapper<Borrower> {
     public Borrower map(ResultSet rs, StatementContext ctx) throws SQLException {
         String name = rs.getString("firstName");
         FirstName firstName = new FirstName(name);
-        return new Borrower(firstName);
+        String lastNameStr = rs.getString("lastName");
+        LastName lastName = new LastName(lastNameStr);
+        String emailStr = rs.getString("email");
+        Email email = new Email(emailStr);
+        return new Borrower(firstName, lastName, email);
     }
 }

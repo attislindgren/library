@@ -26,14 +26,14 @@ public class CreateBorrowerControllerTest {
 
     @Test
     void should_create_borrower() {
-        CreateBorrowerRequest request = new CreateBorrowerRequest("Axel");
+        CreateBorrowerRequest request = new CreateBorrowerRequest("Axel", "Olofsson", "axel@olofsson.se");
         String json = javalinJackson.toJsonString(request, CreateBorrowerRequest.class);
 
         JavalinTest.test(app, (server, client) -> {
             try (Response response = client.post("/v1/createBorrower", json)) {
                 Borrower actual = service.searchBorrower(new FirstName("Axel"));
 
-                Borrower expected = new Borrower(new FirstName("Axel"));
+                Borrower expected = new Borrower(new FirstName("Axel"), new LastName("Olofsson"), new Email("axel@olofsson.se"));
                 assertThat(actual).isEqualTo(expected);
                 assertThat(response.code()).isEqualTo(201);
             }

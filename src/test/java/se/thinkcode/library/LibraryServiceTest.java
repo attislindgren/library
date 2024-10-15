@@ -231,7 +231,20 @@ public class LibraryServiceTest {
 
     private Borrower getBorrower() {
         FirstName firstName = new FirstName("Kent");
-        return libraryService.searchBorrower(firstName);
+        LastName lastName = new LastName("Sten");
+        Email email = new Email("kent@sten.se");
+        Borrower borrower = new Borrower(firstName, lastName, email);
+        borrowerService.createBorrower(email, borrower);
+        return borrower;
+    }
+
+    private Borrower getBorrower2() {
+        FirstName firstName = new FirstName("Olle");
+        LastName lastName = new LastName("Sten");
+        Email email = new Email("olle@sten.se");
+        Borrower borrower = new Borrower(firstName, lastName, email);
+        borrowerService.createBorrower(email, borrower);
+        return borrower;
     }
 
     private Book getBook1() {

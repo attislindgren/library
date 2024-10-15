@@ -4,5 +4,6 @@ public class InMemoryLoanRepositoryTest extends LoanRepositoryTest {
     public InMemoryLoanRepositoryTest() {
         loanRepository = new InMemoryLoanRepository();
         bookRepository = new InMemoryBookRepository();
+        borrowerRepository = new InMemoryBorrowerRepository();
     }
 }

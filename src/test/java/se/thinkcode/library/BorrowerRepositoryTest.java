@@ -9,11 +9,14 @@ public abstract class BorrowerRepositoryTest {
     @Test
     void should_create_a_borrower() {
         FirstName firstName = new FirstName("Astrid");
-        Borrower borrower = new Borrower(firstName);
-        repository.createBorrower(borrower);
+        LastName lastName = new LastName("Lindgren");
+        Email email = new Email("förnam@efternamn.se");
+        Borrower borrower = new Borrower(firstName, lastName, email);
 
-        Borrower actual = repository.searchBorrower(firstName);
+        repository.createBorrower(email, borrower);
+        Borrower actual = repository.searchBorrower(email);
 
         assertThat(actual).isEqualTo(borrower);
     }
+
 }

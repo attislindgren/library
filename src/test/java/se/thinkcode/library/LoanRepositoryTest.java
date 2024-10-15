@@ -11,6 +11,8 @@ public abstract class LoanRepositoryTest {
     LoanRepository loanRepository;
     BookRepository bookRepository;
 
+    BorrowerRepository borrowerRepository;
+
     @Test
     void should_return_a_borrowed_book() {
         Book book = getBook();
@@ -115,11 +117,19 @@ public abstract class LoanRepositoryTest {
 
     private Borrower getBorrower() {
         FirstName firstName = new FirstName("Kent");
-        return new Borrower(firstName);
+        LastName lastName = new LastName("Sten");
+        Email email = new Email("kent@sten.se");
+        Borrower borrower = new Borrower(firstName, lastName, email);
+        borrowerRepository.createBorrower(email, borrower);
+        return borrower;
     }
 
     private Borrower getBorrower2() {
         FirstName firstName = new FirstName("Olle");
-        return new Borrower(firstName);
+        LastName lastName = new LastName("Sten");
+        Email email = new Email("olle@sten.se");
+        Borrower borrower = new Borrower(firstName, lastName, email);
+        borrowerRepository.createBorrower(email, borrower);
+        return borrower;
     }
 }

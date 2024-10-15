@@ -11,7 +11,7 @@ public class BorrowerService {
         return borrowerRepository.searchBorrower(name);
     }
 
-    public void createBorrower(Borrower borrower) {
-        borrowerRepository.createBorrower(borrower);
+    public void createBorrower(Email email, Borrower borrower) {
+        borrowerRepository.createBorrower(email, borrower);
     }
 }

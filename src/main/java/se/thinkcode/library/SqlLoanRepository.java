@@ -16,54 +16,54 @@ public class SqlLoanRepository implements LoanRepository {
     public void borrowBook(Book book, Borrower borrower, LocalDate date) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().firstName();
-        dao.borrowBook(isbn, firstName, date);
+        String email = borrower.getEmail().email();
+        dao.borrowBook(isbn, email, date);
     }
 
     @Override
     public List<Book> getBooksBorrowedBy(Borrower borrower) {
         LoanDao dao = databaseConnection.getLoanDao();
-        String firstName = borrower.getName().firstName();
-        return dao.getBooksBorrowedBy(firstName);
+        String email = borrower.getEmail().email();
+        return dao.getBooksBorrowedBy(email);
     }
 
     @Override
     public LocalDate getDateOfLoan(Borrower borrower, Book book) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().firstName();
-        return dao.getDateOfLoan(isbn, firstName);
+        String email = borrower.getEmail().email();
+        return dao.getDateOfLoan(isbn, email);
     }
 
     @Override
     public void returnBook(Book book, Borrower borrower, LocalDate returnDate) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().firstName();
-        dao.returnBook(isbn, firstName, returnDate);
+        String email = borrower.getEmail().email();
+        dao.returnBook(isbn, email, returnDate);
     }
 
     @Override
     public LocalDate getDateOfReturn(Borrower borrower, Book book) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().firstName();
-        return dao.getDateOfReturn(isbn, firstName);
+        String email = borrower.getEmail().email();
+        return dao.getDateOfReturn(isbn, email);
     }
 
     @Override
     public Loan getLoan(Book book, Borrower borrower) {
         LoanDao dao = databaseConnection.getLoanDao();
         String isbn = book.isbn().getIsbn();
-        String firstName = borrower.getName().firstName();
-        return dao.getLoan(isbn, firstName);
+        String email = borrower.getEmail().email();
+        return dao.getLoan(isbn, email);
     }
 
     @Override
     public List<Loan> getLoans(Borrower borrower) {
         LoanDao dao = databaseConnection.getLoanDao();
-        String firstName = borrower.getName().firstName();
-        return dao.getLoans(firstName);
+        String email = borrower.getEmail().email();
+        return dao.getLoans(email);
     }
 
     @Override

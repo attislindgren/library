@@ -7,16 +7,24 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface BorrowerDao {
     @SqlUpdate("""
-            INSERT INTO borrower (firstName)
-            VALUES (:firstName)
+            INSERT INTO borrower (firstName, lastName, email)
+            VALUES (:firstName,:lastName,:email)
             """)
-    void createBorrower(@Bind("firstName") String firstName);
+    void createBorrower(@Bind("firstName") String firstName,
+                        @Bind("lastName") String lastName,
+                        @Bind("email") String email);
 
     @SqlQuery("""
-            select firstName
+            select firstName, lastName, email
             from borrower
-            where firstName = :name
+            where email = :email
             """)
     @RegisterRowMapper(BorrowerMapper.class)
-    Borrower searchBorrower(@Bind("name") String name);
+    Borrower searchBorrower(@Bind("email") String email);
+
+    @SqlUpdate("""
+            delete
+            from borrower
+            """)
+    void deleteAllBorrowers();
 }

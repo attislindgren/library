@@ -8,7 +8,9 @@ public class SqlLoanRepositoryIT extends LoanRepositoryTest {
 
         loanRepository = new SqlLoanRepository(databaseConnection);
         bookRepository = new SqlBookRepository(databaseConnection);
+        borrowerRepository = new SqlBorrowerRepository(databaseConnection);
         loanRepository.delete();
         bookRepository.delete();
+        borrowerRepository.delete();
     }
 }

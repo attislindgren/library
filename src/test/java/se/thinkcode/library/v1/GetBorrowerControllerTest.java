@@ -26,8 +26,9 @@ public class GetBorrowerControllerTest {
 
     @Test
     void should_get_borrower() {
-        Borrower borrower = new Borrower(new FirstName("Axel"));
-        service.createBorrower(borrower);
+        Email email = new Email("axel@olofsson.se");
+        Borrower borrower = new Borrower(new FirstName("Axel"), new LastName("Olofsson"), email);
+        service.createBorrower(email, borrower);
         GetBorrowerResponse expected = new GetBorrowerResponse("Axel");
 
         JavalinTest.test(app, (server, client) -> {

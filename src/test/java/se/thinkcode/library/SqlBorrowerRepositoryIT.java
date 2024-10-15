@@ -7,5 +7,6 @@ public class SqlBorrowerRepositoryIT extends BorrowerRepositoryTest {
         DatabaseConnection databaseConnection = new DatabaseConnection();
 
         repository = new SqlBorrowerRepository(databaseConnection);
+        repository.delete();
     }
 }
