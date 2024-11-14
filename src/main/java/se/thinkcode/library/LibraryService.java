@@ -1,8 +1,9 @@
 package se.thinkcode.library;
 
+import se.thinkcode.util.MyList;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryService {
@@ -113,7 +114,7 @@ public class LibraryService {
     public void sendLateMail() {
         List<Borrower> borrowers = loanService.getBorrowers();
         List<Loan> loanList;
-        List<Borrower> lateBorrowers = new ArrayList<>();
+        List<Borrower> lateBorrowers = new MyList<>();
         for (Borrower currentBorrower : borrowers) {
             loanList = loanService.getLoans(currentBorrower);
             for (Loan loan : loanList) {

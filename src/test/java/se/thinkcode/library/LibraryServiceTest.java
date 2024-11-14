@@ -1,9 +1,9 @@
 package se.thinkcode.library;
 
 import org.junit.jupiter.api.Test;
+import se.thinkcode.util.MyList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -209,7 +209,7 @@ public class LibraryServiceTest {
         today = borrowBookToday(book, borrower);
         returnBook(today, 35, book, borrower);
 
-        List<Borrower> expected = new ArrayList<>();
+        List<Borrower> expected = new MyList<>();
         expected.add(borrower);
 
         libraryService.sendLateMail();

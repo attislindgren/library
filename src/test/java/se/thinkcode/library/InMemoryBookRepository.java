@@ -1,6 +1,7 @@
 package se.thinkcode.library;
 
-import java.util.ArrayList;
+import se.thinkcode.util.MyList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public List<Book> searchBooks(Title title) {
-        List<Book> booksWithTitle = new ArrayList<>();
+        List<Book> booksWithTitle = new MyList<>();
         for (Book currentBook : books.values()) {
             if (currentBook.title().equals(title)) {
                 booksWithTitle.add(currentBook);
@@ -37,7 +38,7 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public List<Book> searchByAuthor(String surname) {
-        List<Book> booksByAuthor = new ArrayList<>();
+        List<Book> booksByAuthor = new MyList<>();
         for (Book currentBook : books.values()) {
             if (currentBook.author().getSurname().equals(surname)) {
                 booksByAuthor.add(currentBook);
@@ -48,7 +49,7 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public List<Book> searchByFirstName(String firstName) {
-        List<Book> booksByAuthor = new ArrayList<>();
+        List<Book> booksByAuthor = new MyList<>();
         for (Book currentBook : books.values()) {
             if (currentBook.author().getFirstName().equals(firstName)) {
                 booksByAuthor.add(currentBook);

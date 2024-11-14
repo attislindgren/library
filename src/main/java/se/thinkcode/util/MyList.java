@@ -1,9 +1,6 @@
 package se.thinkcode.util;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyList<E> implements List<E> {
     private static class Data<E> {
@@ -42,15 +39,37 @@ public class MyList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        return new Iterator<E>() {
+            Data<E> current = root;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                E val = current.value;
+                current = current.next;
+                return val;
+            }
+        };
     }
 
 
     @Override
     public Object[] toArray() {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        int s = size();
+        Object[] arr = new Object[s];
+        int index = 0;
+        for (Object o : this) {
+            arr[index] = o;
+            index++;
+        }
+        return arr;
     }
 
 
@@ -79,8 +98,18 @@ public class MyList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        Data<E> current = root;
+        if (root.value.equals(o)) {
+            root = current.next;
+            return true;
+        }
+        while (current.next != null) {
+            if (current.next.value.equals(o)) {
+                current.next = current.next.next;
+            }
+            current = current.next;
+        }
+        return true;
     }
 
     @Override
@@ -121,8 +150,8 @@ public class MyList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        Object[] arr = toArray();
+        return (E) arr[index];
     }
 
     @Override

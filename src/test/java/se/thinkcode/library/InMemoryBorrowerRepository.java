@@ -1,6 +1,7 @@
 package se.thinkcode.library;
 
-import java.util.ArrayList;
+import se.thinkcode.util.MyList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class InMemoryBorrowerRepository implements BorrowerRepository {
 
 
     public InMemoryBorrowerRepository() {
-        borrowers = new ArrayList<>();
+        borrowers = new MyList<>();
         FirstName firstName = new FirstName("Kent");
         LastName lastName = new LastName("Sten");
         Email email = new Email("kent@sten.se");

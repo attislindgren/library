@@ -1,5 +1,7 @@
 package se.thinkcode.library;
 
+import se.thinkcode.util.MyList;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +13,7 @@ public class InMemoryLoanRepository implements LoanRepository {
 
     @Override
     public void borrowBook(Book book, Borrower borrower, LocalDate date) {
-        List<Loan> loanList = this.checkedOutLoans.getOrDefault(borrower, new ArrayList<>());
+        List<Loan> loanList = this.checkedOutLoans.getOrDefault(borrower, new MyList<>());
         Loan loan = new Loan(book, date);
         loanList.add(loan);
         this.checkedOutLoans.put(borrower, loanList);
@@ -19,7 +21,7 @@ public class InMemoryLoanRepository implements LoanRepository {
 
     @Override
     public List<Book> getBooksBorrowedBy(Borrower borrower) {
-        List<Book> books = new ArrayList<>();
+        List<Book> books = new MyList<>();
         List<Loan> loanList = this.checkedOutLoans.get(borrower);
         for (Loan currentLoan : loanList) {
             Book currentBook = currentLoan.getBook();
