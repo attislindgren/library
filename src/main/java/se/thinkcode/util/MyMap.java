@@ -5,10 +5,13 @@ import java.util.*;
 
 public class MyMap<K, V> implements Map<K, V> {
     private final List<Data<K, V>> data;
+    private final int stepLength = 3;
+    private final int sizeMap = 11;
+
 
     public MyMap() {
-        data = new ArrayList<>(11);
-        for (int i = 0; i < 11; i++) {
+        data = new ArrayList<>(sizeMap);
+        for (int i = 0; i < sizeMap; i++) {
             data.add(null);
         }
     }
@@ -16,7 +19,7 @@ public class MyMap<K, V> implements Map<K, V> {
     @Override
     public int size() {
         int count = 0;
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < sizeMap; i++) {
             if (this.data.get(i) != null) {
                 count++;
             }
@@ -26,7 +29,7 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean isEmpty() {
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < sizeMap; i++) {
             if (this.data.get(i) != null) {
                 return false;
             }
@@ -37,7 +40,7 @@ public class MyMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsKey(Object key) {
         List<Object> keys = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < sizeMap; i++) {
             if (this.data.get(i) != null) {
                 Object current_key = data.get(i).key;
                 keys.add(current_key);
@@ -49,15 +52,13 @@ public class MyMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsValue(Object value) {
         List<Object> keys = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < sizeMap; i++) {
             if (this.data.get(i) != null) {
                 Object current_key = data.get(i).key;
                 keys.add(current_key);
             }
         }
-
-        for (int i = 0; i < keys.size(); i++) {
-            Object key = keys.get(i);
+        for (Object key : keys) {
             if (get(key) == value) {
                 return true;
             }
@@ -67,24 +68,43 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(Object key) {
-        int pos = key.hashCode() % 11;
-        Data<K, V> d = data.get(pos);
-        return d.value;
+        int pos = key.hashCode() % sizeMap;
+        for (int i = 0; i < sizeMap; i++) {
+            Data<K, V> d = data.get(pos);
+            if (data.get(pos).key == key) {
+                return d.value;
+            }
+            pos = (pos + stepLength) % sizeMap;
+        }
+        return null;
     }
 
     @Override
     public V put(K key, V value) {
         Data<K, V> d = new Data<>(key, value);
-        int pos = key.hashCode() % 11;
-        data.set(pos, d);
-        return value;
+        int pos = key.hashCode() % sizeMap;
+        int absPosition = Math.abs(pos);
+        for (int i = 0; i < sizeMap; i++) {
+            if (data.get(absPosition) == null) {
+                data.set(absPosition, d);
+                return value;
+            }
+            absPosition = (absPosition + stepLength) % sizeMap;
+        }
+        return null; //om den inte kan få plats gör map större
     }
 
     @Override
     public V remove(Object key) {
         V value = get(key);
-        int pos = key.hashCode() % 11;
-        data.set(pos, null);
+        int pos = key.hashCode() % sizeMap;
+        for (int i = 0; i < sizeMap; i++) {
+            if (data.get(pos).key == key) {
+                data.set(pos, null);
+                return value;
+            }
+            pos = (pos + stepLength) % sizeMap;
+        }
         return value;
     }
 
@@ -96,7 +116,7 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < sizeMap; i++) {
             if (this.data.get(i) != null) {
                 data.set(i, null);
             }

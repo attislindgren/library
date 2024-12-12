@@ -115,4 +115,40 @@ public class MyMapTest {
 
         assertThat(actual.containsValue("Röd")).isTrue();
     }
+
+    @Test
+    void should_add_two_with_same_position() {
+        Map<String, String> actual = new MyMap<>();
+        String key = "Vindruva";
+        String value = "Röd";
+        actual.put(key, value);
+        key = "Olive";
+        value = "Grön";
+        actual.put(key, value);
+
+        assertThat(actual.containsKey("Vindruva")).isTrue();
+        assertThat(actual.containsKey("Olive")).isTrue();
+    }
+
+    @Test
+    void should_add_11_items() {
+        Map<String, String> actual = new MyMap<>();
+        actual.put("Vindruva", "Röd");
+        actual.put("Olive", "Grön");
+        actual.put("Paprika", "Gul");
+        actual.put("Brie", "Ost");
+        actual.put("Sallad", "Isberg");
+        actual.put("Äpple", "Rosa");
+        actual.put("Te", "Fruktigt");
+        actual.put("Kaffe", "Svart");
+        actual.put("Appelsin", "Orange");
+        actual.put("Vatten", "Blå");
+        actual.put("Salt", "Vit");
+        /*key = "Ägg";
+        value = "Vitgul";
+        actual.put(key, value);*/
+
+        assertThat(actual.size()).isEqualTo(11);
+        //assertThat(actual.containsKey("Ägg")).isTrue();
+    }
 }
