@@ -4,23 +4,42 @@ package se.thinkcode.util;
 import java.util.*;
 
 public class MyMap<K, V> implements Map<K, V> {
-    private final List<Data<K, V>> data;
+    private List<Data<K, V>> data;
     private final int stepLength = 3;
-    private final int sizeMap = 11;
 
 
     public MyMap() {
-        data = new ArrayList<>(sizeMap);
+        data = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            data.add(null);
+        }
+    }
+
+    void bigger() {
+        List<Data<K, V>> old = new ArrayList<>(data);
+        int sizeMap = nextSize();
+        data = new ArrayList<>();
         for (int i = 0; i < sizeMap; i++) {
             data.add(null);
         }
+        for (Data<K, V> current : old) {
+            if (current != null) {
+                K key = current.key;
+                V value = current.value;
+                this.put(key, value);
+            }
+        }
+    }
+
+    private int nextSize() {
+        return 23;
     }
 
     @Override
     public int size() {
         int count = 0;
-        for (int i = 0; i < sizeMap; i++) {
-            if (this.data.get(i) != null) {
+        for (Data<K, V> d : data) {
+            if (d != null) {
                 count++;
             }
         }
@@ -29,8 +48,8 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean isEmpty() {
-        for (int i = 0; i < sizeMap; i++) {
-            if (this.data.get(i) != null) {
+        for (Data<K, V> d : data) {
+            if (d != null) {
                 return false;
             }
         }
@@ -40,9 +59,9 @@ public class MyMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsKey(Object key) {
         List<Object> keys = new ArrayList<>();
-        for (int i = 0; i < sizeMap; i++) {
-            if (this.data.get(i) != null) {
-                Object current_key = data.get(i).key;
+        for (Data<K, V> d : data) {
+            if (d != null) {
+                Object current_key = d.key;
                 keys.add(current_key);
             }
         }
@@ -52,9 +71,9 @@ public class MyMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsValue(Object value) {
         List<Object> keys = new ArrayList<>();
-        for (int i = 0; i < sizeMap; i++) {
-            if (this.data.get(i) != null) {
-                Object current_key = data.get(i).key;
+        for (Data<K, V> d : data) {
+            if (d != null) {
+                Object current_key = d.key;
                 keys.add(current_key);
             }
         }
@@ -68,42 +87,47 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(Object key) {
-        int pos = key.hashCode() % sizeMap;
-        for (int i = 0; i < sizeMap; i++) {
-            Data<K, V> d = data.get(pos);
-            if (data.get(pos).key == key) {
+        int pos = key.hashCode() % data.size();
+        int absPosition = Math.abs(pos);
+        for (int i = 0; i < data.size(); i++) {
+            Data<K, V> d = data.get(absPosition);
+            if (data.get(absPosition).key == key) {
                 return d.value;
             }
-            pos = (pos + stepLength) % sizeMap;
+            absPosition = (absPosition + stepLength) % data.size();
         }
         return null;
     }
 
     @Override
     public V put(K key, V value) {
+        if (size() >= (data.size() * 0.75)) {
+            bigger();
+        }
         Data<K, V> d = new Data<>(key, value);
-        int pos = key.hashCode() % sizeMap;
+        int pos = key.hashCode() % data.size();
         int absPosition = Math.abs(pos);
-        for (int i = 0; i < sizeMap; i++) {
+        for (int i = 0; i < data.size(); i++) {
             if (data.get(absPosition) == null) {
                 data.set(absPosition, d);
                 return value;
             }
-            absPosition = (absPosition + stepLength) % sizeMap;
+            absPosition = (absPosition + stepLength) % data.size();
         }
-        return null; //om den inte kan få plats gör map större
+        return null;
     }
 
     @Override
     public V remove(Object key) {
         V value = get(key);
-        int pos = key.hashCode() % sizeMap;
-        for (int i = 0; i < sizeMap; i++) {
-            if (data.get(pos).key == key) {
-                data.set(pos, null);
+        int pos = key.hashCode() % data.size();
+        int absPosition = Math.abs(pos);
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(absPosition).key == key) {
+                data.set(absPosition, null);
                 return value;
             }
-            pos = (pos + stepLength) % sizeMap;
+            absPosition = (absPosition + stepLength) % data.size();
         }
         return value;
     }
@@ -116,7 +140,7 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < sizeMap; i++) {
+        for (int i = 0; i < data.size(); i++) {
             if (this.data.get(i) != null) {
                 data.set(i, null);
             }

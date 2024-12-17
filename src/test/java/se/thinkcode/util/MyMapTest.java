@@ -131,7 +131,7 @@ public class MyMapTest {
     }
 
     @Test
-    void should_add_11_items() {
+    void should_add_12_items() {
         Map<String, String> actual = new MyMap<>();
         actual.put("Vindruva", "Röd");
         actual.put("Olive", "Grön");
@@ -144,11 +144,30 @@ public class MyMapTest {
         actual.put("Appelsin", "Orange");
         actual.put("Vatten", "Blå");
         actual.put("Salt", "Vit");
-        /*key = "Ägg";
-        value = "Vitgul";
-        actual.put(key, value);*/
+        actual.put("Ägg", "Vitgul");
 
-        assertThat(actual.size()).isEqualTo(11);
-        //assertThat(actual.containsKey("Ägg")).isTrue();
+        assertThat(actual.size()).isEqualTo(12);
+        assertThat(actual.containsKey("Ägg")).isTrue();
+    }
+
+    @Test
+    void should_add_17_items() {
+        Map<Integer, Integer> actual = new MyMap<>();
+        for (int i = 0; i < 17; i++) {
+            actual.put(i, i);
+        }
+        assertThat(actual.size()).isEqualTo(17);
+    }
+
+    @Test
+    void should_remove_item_twelve() {
+        Map<Integer, Integer> actual = new MyMap<>();
+        for (int i = 0; i < 17; i++) {
+            actual.put(i, i);
+        }
+        actual.remove(2);
+
+        assertThat(actual.size()).isEqualTo(16);
+        assertThat(actual).doesNotContainKeys(2);
     }
 }
