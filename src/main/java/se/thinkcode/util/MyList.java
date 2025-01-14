@@ -26,14 +26,18 @@ public class MyList<E> implements List<E> {
 
     @Override
     public boolean isEmpty() {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        return size() == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        for (int i = 0; i < size(); i++) {
+            E candidate = get(i);
+            if (candidate.equals(o)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -144,8 +148,7 @@ public class MyList<E> implements List<E> {
 
     @Override
     public void clear() {
-// todo implement me
-        throw new RuntimeException("Not yet implemented");
+        root = null;
     }
 
     @Override

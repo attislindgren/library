@@ -32,7 +32,7 @@ public class MyMap<K, V> implements Map<K, V> {
     }
 
     private int nextSize() {
-        return 23;
+        return data.size() * 2;
     }
 
     @Override
@@ -149,8 +149,15 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public Set<K> keySet() {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        //Set<K> setKeys = new HashSet<>();
+        Set<K> setKeys = new MySet<>();
+        for (Data<K, V> d : data) {
+            if (d != null) {
+                K current_key = d.key;
+                setKeys.add(current_key);
+            }
+        }
+        return setKeys;
     }
 
 

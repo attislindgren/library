@@ -116,6 +116,18 @@ class MyListTest {
     }
 
     @Test
+    void should_clear_list() {
+        List<String> actual = new MyList<>();
+        actual.add("Hej");
+        actual.add("då");
+        actual.add("igen");
+
+        actual.clear();
+
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
     void should_throw_IndexOutOfBoundsException_when_index_is_too_large() {
         List<String> list = new MyList<>();
         list.add("Hej");

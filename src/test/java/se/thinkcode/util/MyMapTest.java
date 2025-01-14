@@ -3,6 +3,7 @@ package se.thinkcode.util;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -169,5 +170,28 @@ public class MyMapTest {
 
         assertThat(actual.size()).isEqualTo(16);
         assertThat(actual).doesNotContainKeys(2);
+    }
+
+    @Test
+    void should_get_set_of_all_keys() {
+        Map<String, String> actual = new MyMap<>();
+        actual.put("Vindruva", "Röd");
+        actual.put("Olive", "Grön");
+        actual.put("Paprika", "Gul");
+        actual.put("Brie", "Ost");
+        actual.put("Sallad", "Isberg");
+        actual.put("Äpple", "Rosa");
+        actual.put("Te", "Fruktigt");
+        actual.put("Kaffe", "Svart");
+        actual.put("Appelsin", "Orange");
+        actual.put("Vatten", "Blå");
+        actual.put("Salt", "Vit");
+        actual.put("Ägg", "Vitgul");
+
+        Set<String> actualSet = actual.keySet();
+
+        assertThat(actualSet.contains("Ägg")).isTrue();
+        assertThat(actualSet).contains("Ägg");
+        assertThat(actualSet.size()).isEqualTo(12);
     }
 }
