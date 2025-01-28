@@ -16,8 +16,8 @@ public class SqlBookRepository implements BookRepository {
         BookDao dao = databaseConnection.getBookDao();
         String title = book.title().getTitle();
         String isbn = book.isbn().getIsbn();
-        String firstName = book.author().getFirstName();
-        String surname = book.author().getSurname();
+        String firstName = book.author().firstName();
+        String surname = book.author().surname();
         dao.createBook(title, isbn, firstName, surname);
     }
 

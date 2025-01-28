@@ -40,7 +40,7 @@ public class InMemoryBookRepository implements BookRepository {
     public List<Book> searchByAuthor(String surname) {
         List<Book> booksByAuthor = new MyList<>();
         for (Book currentBook : books.values()) {
-            if (currentBook.author().getSurname().equals(surname)) {
+            if (currentBook.author().surname().equals(surname)) {
                 booksByAuthor.add(currentBook);
             }
         }
@@ -51,7 +51,7 @@ public class InMemoryBookRepository implements BookRepository {
     public List<Book> searchByFirstName(String firstName) {
         List<Book> booksByAuthor = new MyList<>();
         for (Book currentBook : books.values()) {
-            if (currentBook.author().getFirstName().equals(firstName)) {
+            if (currentBook.author().firstName().equals(firstName)) {
                 booksByAuthor.add(currentBook);
             }
         }
