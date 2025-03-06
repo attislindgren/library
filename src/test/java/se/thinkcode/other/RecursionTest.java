@@ -60,4 +60,28 @@ public class RecursionTest {
 
         assertThat(actual).isTrue();
     }
+
+    @Test
+    void anna_is_a_palindrome() {
+        Recursion recursion = new Recursion();
+        boolean actual = recursion.isPalindrome("anna");
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    void rasar_is_a_palindrome() {
+        Recursion recursion = new Recursion();
+        boolean actual = recursion.isPalindrome("rasar");
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    void ramlar_is_a_palindrome() {
+        Recursion recursion = new Recursion();
+        boolean actual = recursion.isPalindrome("ramlar");
+
+        assertThat(actual).isFalse();
+    }
 }

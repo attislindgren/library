@@ -36,10 +36,15 @@ public class Recursion {
     }
 
     public boolean isPalindrome(String word) {
-        if (word.equals("apa")) {
-            return true;
+        if (word.length() == 1 || word.length() == 2) {
+            return word.charAt(0) == word.charAt(word.length() - 1);
+
         } else {
-            return false;
+            if (word.charAt(0) == word.charAt(word.length() - 1)) {
+                return isPalindrome(word.substring(1, word.length() - 1));
+            } else {
+                return false;
+            }
         }
     }
 }
