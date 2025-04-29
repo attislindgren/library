@@ -56,4 +56,45 @@ public class MaxHeap {
     }
 
 
+    public int getMax() {
+        if (root == null) {
+            return -1;
+        }
+        int max = root.value;
+        int value = delete(root, null);
+        if (root != null) {
+            root.value = value;
+            heapify(root);
+        }
+        return max;
+    }
+
+
+    private int delete(Node root, Node parent) {
+        if (root.left == null && root.right == null && parent == null) {
+            int current = root.value;
+            this.root = null;
+            return current;
+        }
+        if (root.left == null && root.right == null) {
+            int current = root.value;
+            if (parent.left == root) {
+                parent.left = null;
+            }
+            if (parent.right == root) {
+                parent.right = null;
+            }
+            return current;
+        } else {
+            if (root.left != null) {
+                return delete(root.left, root);
+            }
+            return delete(root.right, root);
+
+        }
+    }
+
+    public Node getRoot() {
+        return root;
+    }
 }

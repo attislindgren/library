@@ -6,10 +6,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MaxHeapTest {
 
-    private final MaxHeap maxHeap = new MaxHeap();
+
 
     @Test
     void should_add_element_to_heap() {
+        MaxHeap maxHeap = new MaxHeap();
+        
         maxHeap.insert(21);
         maxHeap.insert(10);
         maxHeap.insert(18);
@@ -20,12 +22,11 @@ public class MaxHeapTest {
         maxHeap.insert(33);
         maxHeap.insert(17);
         maxHeap.insert(4711);
-        maxHeap.insert(15);
         System.out.println();
 
         assertThat(maxHeap.peek()).isEqualTo(4711);
 
-        /*printTree(maxHeap.getRoot(), 4);
+        printTree(maxHeap.getRoot(), 4);
 
         assertThat(maxHeap.getMax()).isEqualTo(4711);
         assertThat(maxHeap.getMax()).isEqualTo(44);
@@ -48,6 +49,6 @@ public class MaxHeapTest {
             }
             System.out.println(node.value);
             printTree(node.left, level + 1);
-        }*/
+        }
     }
 }
