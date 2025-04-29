@@ -2,42 +2,66 @@ package se.thinkcode.other;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PriorityQ {
-    public ArrayList<Job> runJobs(ArrayList<Job> jobList) {
-        int i = ((jobList.size() / 2) - 1);
-        ArrayList<Job> heap = heapify(jobList, i);
-        return heap;
+    private final List<Job> prioQueue = new ArrayList<>();
+
+    public void insert(Job job) {
+        prioQueue.add(job);
+        int indexLast = prioQueue.size() - 1;
+        heapify(prioQueue, indexLast);
     }
 
-    public ArrayList<Job> heapify(ArrayList<Job> jobList, int i) {
-        if (i == 0) {
-            if (jobList.get(i).prio() > jobList.get(leftChild(i)).prio() && jobList.get(i).prio() > jobList.get(rightChild(i)).prio()) {
-                return jobList;
-            }
-            if (jobList.get(i).prio() < jobList.get(leftChild(i)).prio()) {
-                if (jobList.get(leftChild(i)).prio() > jobList.get(rightChild(i)).prio()) {
-                    Collections.swap(jobList, leftChild(i), i);
-                    return jobList;
-                } else {
-                    Collections.swap(jobList, rightChild(i), i);
-                }
-            }
-        } else {
-            return heapify(jobList, (i - 1));
+    private void heapify(List<Job> prioQueue, int indexChild) {
+        if (indexChild != 0 && prioQueue.get(indexChild).prio() > prioQueue.get(parent(indexChild)).prio()) {
+            Collections.swap(prioQueue, indexChild, parent(indexChild));
+            heapify(prioQueue, parent(indexChild));
         }
-        return jobList;
     }
 
-    public int leftChild(int i) {
-        return 2 * i + 1;
+    private int parent(int indexChild) {
+        return (indexChild - 1) / 2;
     }
 
-    public int rightChild(int i) {
-        return 2 * i + 2;
+    private int leftChild(int indexParent) {
+        return 2 * indexParent + 1;
     }
 
-    public Job getJob(ArrayList<Job> heap) {
-        return heap.get(0);
+    private int rightChild(int indexParent) {
+        return 2 * indexParent + 2;
+    }
+
+
+    public Job peek() {
+        return prioQueue.getFirst();
+    }
+
+    public Job getMax() {
+        Job max = prioQueue.getFirst();
+        Collections.swap(prioQueue, 0, prioQueue.size() - 1);
+        prioQueue.remove(max);
+        heapifyDown(0);
+
+        return max;
+    }
+
+    private void heapifyDown(int current) {
+        if ((prioQueue.size() - 1) > current) {
+            Job largest = prioQueue.get(current);
+            int left = leftChild(current);
+            if (left < (prioQueue.size() - 1) && largest.prio() < prioQueue.get(left).prio()) {
+                largest = prioQueue.get(left);
+            }
+            int right = rightChild(current);
+            if (right < (prioQueue.size() - 1) && largest.prio() < prioQueue.get(right).prio()) {
+                largest = prioQueue.get(right);
+            }
+            if (largest != prioQueue.get(current)) {
+                int large = prioQueue.indexOf(largest);
+                Collections.swap(prioQueue, current, large);
+                heapifyDown(large);
+            }
+        }
     }
 }
